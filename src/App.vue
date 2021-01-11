@@ -19,43 +19,34 @@
         </label>
     </div>
     <div class="grid grid-cols-1 gap-4 mx-12">
-        <span
-            class="block px-6 py-4 text-xl font-bold text-gray-800 text-opacity-95 bg-yellow-200 bg-opacity-50 rounded-lg"
-        >
-            {{ output.short }}
-        </span>
-        <span
-            class="block px-6 py-4 text-xl font-bold text-gray-800 text-opacity-95 bg-teal-200 bg-opacity-50 rounded-lg"
-        >
-            {{ output.long }}
-        </span>
-        <span
-            class="block px-6 py-4 text-xl font-bold text-gray-800 text-opacity-95 bg-green-200 bg-opacity-50 rounded-lg"
-        >
-            {{ output.phrase }}
-        </span>
+        <OutputRow :content="output.short" :length="12" color="bg-yellow-200" />
+        <OutputRow :content="output.long" :length="24" color="bg-teal-200" />
+        <OutputRow :content="output.phrase" :length="24" color="bg-green-200" />
     </div>
 </template>
 
 <script>
 import { reactive, watch } from 'vue';
+import OutputRow from './components/OutputRow';
 import password from './dpg';
 
-const split = (s, n = 3) => [...Array(Math.ceil(s.length / n))].map((_, i) => s.slice(i * n, i * n + n)).join(' ');
-
 export default {
+    components: { OutputRow },
     setup() {
         const input = reactive({ sentence: '', word: '' });
         const output = reactive({ short: '', long: '', phrase: '' });
+        const options = reactive({ show: false, dark: false });
 
         watch(input, () => {
-            let [short, long, phrase] = password(input.sentence, input.word);
-            output.short = split(short);
-            output.long = split(long);
-            output.phrase = split(phrase);
+            [output.short, output.long, output.phrase] =
+                input.sentence || input.word ? password(input.sentence, input.word) : ['', '', ''];
         });
 
-        return { input, output };
+        return {
+            input,
+            output,
+            options,
+        };
     },
 };
 </script>

@@ -10,6 +10,7 @@ module.exports = {
             },
             colors: {
                 teal: colors.teal,
+                gray: colors.trueGray,
             },
         },
     },
