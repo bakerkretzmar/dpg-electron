@@ -1,5 +1,10 @@
 <template>
-    <div class="w-full h-9" style="-webkit-user-select: none; -webkit-app-region: drag"></div>
+    <div
+        class="flex items-center justify-center w-full h-10"
+        style="-webkit-user-select: none; -webkit-app-region: drag"
+    >
+        <h1 class="text-xl text-center font-bold">DPG</h1>
+    </div>
     <div class="grid grid-cols-1 gap-6 m-12">
         <label class="block">
             <span class="text-gray-700">Sentence</span>
